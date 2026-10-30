@@ -1,0 +1,141 @@
+# Lab evidence — OpenMediaVault for Mere Mortals
+
+What was read, where it came from, and what could not be done.
+Recorded 2026-10-30.
+
+## The ceiling, stated plainly
+
+No live install was performed or attempted. Two independent
+reasons:
+
+1. **The product is Debian-only.** The current release,
+   openmediavault 8 "Synchrony", supports exactly one base:
+   Debian 13 "Trixie". This lab machine is an Ubuntu sandbox.
+   The project's own FAQ answers the Ubuntu question directly:
+   "Yes. But the end is most likely a broken web interface and
+   possibly broken system. openmediavault releases are heavily
+   tight to their Debian base distribution."
+2. **The lab machine is shared.** The on-Debian install route
+   reconfigures the host (it purges network-manager, takes over
+   nginx, samba, networking and more — see the package's
+   `Conflicts:` and `Depends:` in `package-facts.txt`). Running
+   it here would break the machine for everyone else on it.
+
+So this guide's lab is a **dissection**: the project's own
+source tree, install script, package metadata and official
+documentation, read closely and cross-checked against each
+other. Anything the guide describes about screens and
+behaviour is sourced from those artefacts, never invented.
+
+## Artefacts read (primary sources)
+
+### The source tree the package is built from
+
+- Repository: https://github.com/openmediavault/openmediavault
+- Branch `master`, commit `9d8530ffa6912ece116bc6c74d0f3d06045b6c26`
+  (2026-10-30). Its `deb/openmediavault/debian/changelog` head
+  reads `openmediavault (8.6.1-1)` — the 8.6 line in
+  development; the current release is **8.6.0** (the project
+  website's front page, checked the same day).
+- The `7.x` branch was also read (changelog head
+  `7.7.24-7`, commit `fa3125f5f18bc740d11caad3ffe8776c55cdf210`)
+  to confirm which behaviours changed between OMV 7 and OMV 8
+  — notably software RAID and FTP leaving the core.
+- Read in the tree: `debian/control` (dependencies and
+  conflicts), `usr/sbin/` (the `omv-*` commands),
+  `usr/share/openmediavault/datamodels/` (71 JSON models of
+  the configuration database), `usr/share/openmediavault/
+  templates/config.xml` (the database's starting shape),
+  `usr/share/openmediavault/engined/rpc/` and `.../module/`
+  (the backend services and the apply machinery, including
+  `config.inc`'s `applyChanges`/`isDirty`/`revertChanges`),
+  `srv/salt/omv/deploy/` (the per-service render stages),
+  `usr/share/openmediavault/workbench/navigation.d/`
+  (74 files defining the web interface's menu tree),
+  `.../workbench/dashboard.d/` (the dashboard widgets),
+  `.../workbench/mkfs.d/` (the filesystems the core can
+  create: btrfs, ext4, f2fs, jfs, xfs),
+  `usr/share/openmediavault/firstaid/modules.d/` (the
+  omv-firstaid menu).
+- Excerpts preserved in this folder: `package-facts.txt`,
+  `navigation-tree.txt`, `config-template-head.txt`,
+  `sharedfolder-datamodel.json`.
+
+### The install script
+
+- https://raw.githubusercontent.com/OpenMediaVault-Plugin-Developers/installScript/master/install
+  (fetched 2026-10-30). Its own help text: "This script will
+  always install: OMV 8.x (synchrony) on Debian 13 (Trixie)".
+- Its version gate, preserved verbatim in
+  `install-script-debian-gate.txt`: any codename other than
+  `trixie` ends with "Unsupported version.  Only 13 (Trixie)
+  is supported.  Exiting..." and exit code 1.
+- The script adds `https://packages.openmediavault.org/public`
+  as the package repository, installs `openmediavault-keyring`
+  first, removes network-manager/dhcpcd5/cloud-init, applies
+  network configuration through `omv-salt deploy run
+  systemd-networkd`, and reboots.
+
+### The package repository — attempted, and what happened
+
+- `packages.openmediavault.org` now redirects to
+  `packages.openmediavault.io`, which redirects package paths
+  to `openmediavault.github.io/packages/`. Through this lab's
+  HTTP proxy, the pool listing and `Packages.gz` for the
+  `sandworm` (OMV 7) distribution returned the host's 404 page,
+  and a sandboxed `apt-get update` against the repository
+  timed out. **The .deb files themselves could not be
+  downloaded here**, so the dissection used the source tree
+  above — the same files the package installs, in the form
+  the project itself publishes. The pool's published version
+  list (via the search index of packages.openmediavault.org)
+  showed the OMV 7 line ending at `openmediavault_7.7.24-1`,
+  consistent with OMV 7's end-of-life in June 2026.
+
+### The official documentation
+
+Read at https://docs.openmediavault.org/en/8.x/ on
+2026-10-30: the releases table (8.0 Synchrony, Debian 13,
+stable since Dec 2025; 7.0 Sandworm EOL Jun 2026),
+prerequisites (hardware/software requirements, system-drive
+vs data-drive rules), installation (variants; the ISO page's
+warning that the OS disk is consumed whole; first-login
+credentials `admin` / `openmediavault`; root SSH enabled by
+default), administration pages for the workbench, storage,
+shared folders (whose printed config.xml example matches the
+datamodel field for field), services, users, plugins (the
+official plugin list, including FTP, MD RAID, LVM2, NUT,
+USB Backup, Podman, K8s), and the FAQ (config.xml's purpose,
+why hand-edited files are rewritten, the lack of a regular
+config backup/restore procedure, omv-firstaid password
+reset, shared-folder ownership `root:users` mode `2775`).
+
+## Cross-checks performed
+
+- Docs' Shared Folders page prints a `<sharedfolder>` XML
+  example: uuid, name, comment, mntentref, reldirpath,
+  privileges with perms 7/5/0. The shipped datamodel
+  `conf.system.sharedfolder.json` defines exactly those
+  fields, with perms restricted to the enum 0, 5, 7.
+- The docs' Storage section still carries a RAID page, but
+  the shipped navigation tree has no RAID entry and the
+  official plugin list carries "MD: Create, manage, and
+  monitor software RAIDs" — in OMV 8, RAID is a plugin.
+  The guide follows the shipped product, not the stale page.
+- The docs' Services section describes an FTP chapter, but
+  the shipped core has no FTP service (no datamodel, no RPC
+  service, no navigation item) and the plugin list carries
+  "FTP: Provides a modular FTP/FTPS server" — FTP is the
+  `openmediavault-ftp` plugin in OMV 8.
+- The install script's stated target (OMV 8 on Debian 13)
+  matches the docs' releases table and the website's
+  current version (8.6.0).
+
+## Not done, and not claimed
+
+- No installation, on any route. No login to a workbench.
+  No disk wiped, no filesystem created, no share served.
+- Screenshots: none exist; the guide describes pages only
+  as the navigation tree and documentation define them.
+- Performance, behaviour under load, upgrade from OMV 7:
+  not tested; the guide does not grade them.

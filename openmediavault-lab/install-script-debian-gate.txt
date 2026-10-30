@@ -1,0 +1,21 @@
+codename="$(lsb_release --codename --short)"
+_log "Codename :: ${codename}"
+
+case ${codename} in
+  trixie)
+    omvCodename="synchrony"
+    version=8
+    if [[ ! ${arch} =~ ^(arm64|amd64)$ ]]; then
+      _log "Unsupported architecture :: ${arch}"
+      exit 5
+    fi
+    cpuPkg="linux-cpupower"
+    cpuState="cpupower"
+    cpuFreqDef="/etc/default/cpupower"
+    ;;
+  *)
+    _log "Unsupported version.  Only 13 (Trixie) is supported.  Exiting..."
+    exit 1
+  ;;
+esac
+_log "Debian :: ${codename}"

@@ -1,0 +1,77 @@
+Workbench navigation items (usr/share/openmediavault/workbench/navigation.d), extracted 2026-10-30
+from openmediavault/openmediavault git, master branch (8.6.1-1 in development; release 8.6.0).
+
+account  Account
+account.password  Password
+account.settings  Settings
+dashboard  Dashboard
+diagnostics  Diagnostics
+diagnostics.performance-statistics  Performance Statistics
+diagnostics.performance-statistics.cpu  CPU
+diagnostics.performance-statistics.df  File System Usage
+diagnostics.performance-statistics.load  Load Average
+diagnostics.performance-statistics.memory  Memory Usage
+diagnostics.performance-statistics.network-interfaces  Network Interfaces
+diagnostics.performance-statistics.uptime  Uptime
+diagnostics.processes  Processes
+diagnostics.report  Report
+diagnostics.services  Services
+diagnostics.services.nfs  NFS
+diagnostics.services.smb  SMB/CIFS
+diagnostics.services.ssh  SSH
+diagnostics.system-information  System Information
+diagnostics.system-logs  System Logs
+diagnostics.system-logs.logs  Logs
+diagnostics.system-logs.remote  Remote
+network  Network
+network.firewall  Firewall
+network.firewall.rules  Rules
+network.general  General
+network.interfaces  Interfaces
+network.proxy  Proxy
+services  Services
+services.nfs  NFS
+services.nfs.settings  Settings
+services.nfs.shares  Shares
+services.rsync  Rsync
+services.rsync.server  Server
+services.rsync.server.modules  Modules
+services.rsync.server.settings  Settings
+services.rsync.tasks  Tasks
+services.smb  SMB/CIFS
+services.smb.settings  Settings
+services.smb.shares  Shares
+services.ssh  SSH
+storage  Storage
+storage.disks  Disks
+storage.filesystems  File Systems
+storage.shared-folders  Shared Folders
+storage.smart  S.M.A.R.T.
+storage.smart.devices  Devices
+storage.smart.settings  Settings
+storage.smart.tasks  Scheduled Tasks
+system  System
+system.certificate  Certificates
+system.certificate.ssh  SSH
+system.certificate.ssl  SSL
+system.cron  Scheduled Tasks
+system.datetime  Date & Time
+system.monitoring  Monitoring
+system.notification  Notification
+system.notification.events  Events
+system.notification.settings  Settings
+system.plugins  Plugins
+system.powermgmt  Power Management
+system.powermgmt.settings  Settings
+system.powermgmt.tasks  Scheduled Tasks
+system.updatemgmt  Update Management
+system.updatemgmt.settings  Settings
+system.updatemgmt.settings.software  Software
+system.updatemgmt.settings.updates  Updates
+system.updatemgmt.updates  Updates
+system.workbench  Workbench
+system.workbench.settings  Settings
+usermgmt  Users
+usermgmt.groups  Groups
+usermgmt.settings  Settings
+usermgmt.users  Users

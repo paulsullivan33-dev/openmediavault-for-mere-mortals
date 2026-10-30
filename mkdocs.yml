@@ -1,0 +1,29 @@
+site_name: OpenMediaVault for Mere Mortals
+site_description: A plain language guide to OpenMediaVault, the Debian based home NAS system. Disks and filesystems, shared folders, users, SMB and NFS sharing, the apply step explained from the project's own code, plugins, backups, and the limits stated plainly.
+site_url: https://paulsullivan33-dev.github.io/openmediavault-for-mere-mortals/
+copyright: 'Part of <a href="https://paulsullivan33-dev.github.io/mere-mortals/">For Mere Mortals</a> · Text CC BY 4.0, code MIT'
+
+# Guides live at the repo root (nice for GitHub browsing).
+# The deploy workflow copies them into docs/ before building.
+theme:
+  name: material
+
+nav:
+  - Home: index.md
+  - What OpenMediaVault Is: what-openmediavault-is.md
+  - The Moving Parts: the-moving-parts.md
+  - Before You Install: before-you-install.md
+  - Installing OpenMediaVault: installing-openmediavault.md
+  - First Login and the Workbench: first-login-and-the-workbench.md
+  - Storage — Disks, Filesystems and SMART: storage-disks-filesystems-and-smart.md
+  - Shared Folders: shared-folders.md
+  - Users, Groups and Permissions: users-groups-and-permissions.md
+  - Sharing Files — SMB and NFS: sharing-with-smb-and-nfs.md
+  - SSH, Rsync and FTP: ssh-rsync-and-ftp.md
+  - The Apply Step: the-apply-step.md
+  - Updates, Plugins and Backups: updates-plugins-and-backups.md
+  - The Command Line: the-command-line.md
+  - The Neighbours: the-neighbours.md
+  - Limits: limits.md
+  - Glossary: glossary.md
+  - Writing Criteria: criteria.md

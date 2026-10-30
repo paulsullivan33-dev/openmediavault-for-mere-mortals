@@ -1,0 +1,133 @@
+Package facts extracted from deb/openmediavault (source of the openmediavault .deb)
+
+== /usr/sbin contents ==
+nginx_ensite
+omv-btrfs-dfree
+omv-btrfs-scrub
+omv-confdbadm
+omv-engined
+omv-env
+omv-firstaid
+omv-mkaptidx
+omv-mkrrdgraph
+omv-mkworkbench
+omv-rpc
+omv-run
+omv-salt
+omv-sfsnapadm
+omv-sysinfo
+omv-upgrade
+
+== Salt deploy stages (srv/salt/omv/deploy) ==
+apt
+apticron
+avahi
+certificates
+chrony
+collectd
+cpupower
+cron
+default.sls
+fstab
+halt
+hostname
+hosts
+init.sls
+initramfs
+iptables
+issue
+monit
+nfs
+nginx
+pam
+phpfpm
+postfix
+profile
+quota
+rrdcached
+rsync
+rsyncd
+rsyslog
+samba
+smartmontools
+ssh
+sysctl
+systemd
+systemd-journald
+systemd-logind
+systemd-networkd
+timezone
+watchdog
+webgui
+
+== engined RPC services (usr/share/openmediavault/engined/rpc) ==
+apt
+certificatemgmt
+config
+cron
+diskmgmt
+envvars
+exec
+filesystemmgmt
+folderbrowser
+fstab
+iptables
+logfile
+network
+nfs
+notification
+perfstats
+pluginmgmt
+powermgmt
+quota
+rrd
+rsync
+rsyncd
+services
+sharemgmt
+smart
+smb
+ssh
+syslog
+system
+usermgmt
+webgui
+
+== datamodels ==
+71
+JSON datamodel files
+
+== core mkfs filesystems (workbench/mkfs.d) ==
+btrfs.yaml
+ext4.yaml
+f2fs.yaml
+jfs.yaml
+xfs.yaml
+
+== debian/control (openmediavault stanza) ==
+Package: openmediavault
+Architecture: all
+Conflicts: gdm3, sddm, lxdm, xdm, lightdm, slim, wdm, cloud-init
+Depends: php-fpm, libpam-modules, php-json, dpkg, patch, dash, mawk | gawk,
+ php-cgi, php-cli, php-mbstring, php-pam, sudo, ethtool, python3-dialog,
+ python3-samba, acl, iproute2, xfsprogs, jfsutils, ntfs-3g, wsdd-server,
+ sdparm, mdadm, postfix, libsasl2-modules, bsd-mailx, python3-dbus,
+ linux-cpupower, rsyslog, logrotate, smartmontools, openssl, openssh-server,
+ uuid, tzdata, nfs-kernel-server, lsb-release, sshpass, grep, zstd,
+ wget, util-linux, samba, samba-common-bin, rsync, apt-utils, netplan.io,
+ avahi-daemon, libnss-mdns, iptables, monit, beep, php-bcmath, sed,
+ gdisk, rrdtool, collectd, cron, anacron, quota, php-xml, login,
+ quotatool, whiptail, lvm2, ca-certificates, libc-bin, findutils,
+ coreutils, xmlstarlet, mount, parted, bash, diffutils, lsof, gnupg,
+ rrdcached, locales, nginx, bash-completion, python3, f2fs-tools,
+ python3-apt, wpasupplicant, systemd, systemd-sysv, btrfs-progs, jc,
+ samba-vfs-modules, pciutils, python3-pyudev, python3-natsort, jq, chrony,
+ python3-netifaces, udev, python3-lxml, openmediavault-salt (>= 8.1.0),
+ libnss-myhostname, php-yaml, python3-click, python3-cached-property,
+ python3-polib, libnss-systemd, libnss-resolve, debian-archive-keyring,
+ openmediavault-keyring, systemd-resolved, python3-packaging,
+ unattended-upgrades, apt-listchanges, apticron, ${misc:Depends}
+Description: openmediavault - The open network attached storage solution
+ openmediavault is a small and simple to use network attached storage system
+ with a smart WebGUI.
+
